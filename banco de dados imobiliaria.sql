@@ -8,9 +8,13 @@ create table usuarios(
     cpfUsuario varchar(20),
     emailUsuario varchar(50),
     senhaUsuario varchar(25),
-    senhaUsuarioCrip varchar(255),
-    nivelUsuario varchar(25),
-    fotoUsuario varchar(100)
+    senhaUsuarioCrip varchar(150),
+    nivel varchar(25) 
 );
 
-select * from usuarios
+
+  
+  
+  select * from usuarios;
+  
+  
