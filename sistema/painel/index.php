@@ -478,21 +478,68 @@ $pagina = @$_GET['pagina'];
 		</button>
 
 		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="modalPerfil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Editar dados</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body">
-						...
-					</div>
+					<form action="" method="POST" id="form-user">
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Nome</label>
+										<input type="text" class="form-control" name="nome_user" value="<?php echo $nome_user; ?>">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">CPF</label>
+										<input type="text" class="form-control" name="cpf_user" value="<?php echo $cpf_user; ?>">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Email</label>
+										<input type="text" class="form-control" name="email_user" value="<?php echo $email_user; ?>">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Senha</label>
+										<input type="text" class="form-control" name="senha_user" value="<?php echo $senha_user; ?>">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-8">
+									<div class="form-group">
+										<label for="">Foto</label>
+										<input type="file" class="form-control" name="foto" onChange="carregarImg2();"  id="foto-user" >
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<img src="images/perfil/<?php echo $foto_user ?>" width="100px" id="target-user"> 
+									</div>
+								</div>
+							</div>
+
+							<input type="hidden" name="id_user" value="<?php echo $id_usuario?>">
+							<input type="hidden" name="foto_user" value="<?php echo $foto_user?>">
+						</div>
+					</form>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
+						<button type="submit" class="btn btn-primary">Save changes</button>
 					</div>
 				</div>
 			</div>
@@ -506,6 +553,61 @@ $pagina = @$_GET['pagina'];
 	</div>
 
 	<!-- new added graphs chart js-->
+
+		<!-- carregar imagem no modal -->
+
+		<script>
+			function carregarImg2(){
+				var target = document.getElementById('target-user');
+				var file = document.querySelector('#foto-user').files[0];
+
+				var reader = new FileReader();
+
+				reader.onloadend = function(){
+					target.src = reader.result;
+				};
+
+				if(file){
+					reader.readAsDataURL(file);
+				}else {
+					target.src = "";
+				}
+			}
+		</script>
+
+		<script>
+
+			$('#form-user').submit(function(){
+				event.preventDefault();
+				var formData = new FormData(this);
+
+				$.ajax({
+					url: "editor-dados.php",
+					type: 'POST',
+					data: formData,
+
+					success:function (mensagem){
+						$('#msg-user').text('');	
+						$('#msg-user').removeClass();
+						if(mensagem.trim() == "Salvo com Sucesso"){
+							location.reload();
+						}else{
+							$('#msg-user').addClass('text-danger');
+							$('#msg-user').text(mensagem);
+
+						}
+						
+					},
+					cache:false,
+					contentType:false,
+					processData:false,
+				});
+			})
+
+		</script>
+		<!-- parei aqui -->
+		<!-- https://www.youtube.com/watch?v=8U7fxwHt9JY&list=PLxNM4ef1BpxhMhQuRs5KtLaxwz9Wj3Hmf&index=28 -->
+
 
 	<script src="js/Chart.bundle.js"></script>
 	<script src="js/utils.js"></script>
