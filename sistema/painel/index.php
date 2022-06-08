@@ -4,7 +4,7 @@ require_once "verificar.php";
 require_once "./../conexao.php";
 
 $id_usuario = $_SESSION['id_usuario'];
-$query = $pdo->query("select * from usuarios where idUsuario = $id_usuario");
+$query = $pdo->query("select * from funcionarios where idFuncionario = $id_usuario");
 
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $total_res = @count($res);
@@ -12,13 +12,13 @@ $total_res = @count($res);
 //recuperar os dados do usuario logado
 
 if ($total_res > 0) {
-	$nome_user = $res[0]['nomeUsuario'];
-	$foto_user = $res[0]['fotoUsuario'];
-	$nivel_user = $res[0]['nivelUsuario'];
-	$cpf_user = $res[0]['cpfUsuario'];
-	$senha_user = $res[0]['senhaUsuario'];
-	$email_user = $res[0]['emailUsuario'];
-	$id_user = $res[0]['idUsuario'];
+	$nome_user = $res[0]['nomeFuncionario'];
+	$foto_user = $res[0]['fotoFuncionario'];
+	$nivel_user = $res[0]['administradorFuncionario'];
+	$cpf_user = $res[0]['cpfFuncionario'];
+	$senha_user = $res[0]['senhaFuncionario'];
+	$email_user = $res[0]['emailFuncionario'];
+	$id_user = $res[0]['idFuncionario'];
 }
 
 $pagina = @$_GET['pagina'];
@@ -69,6 +69,10 @@ $pagina = @$_GET['pagina'];
 	<!-- chart -->
 	<script src="js/Chart.js"></script>
 	<!-- //chart -->
+
+	<!-- calendar -->
+	<link rel="stylesheet" href="css/monthly.css">
+	<!-- //calendar -->
 
 	<!-- Metis Menu -->
 	<script src="js/metisMenu.min.js"></script>
@@ -158,29 +162,104 @@ $pagina = @$_GET['pagina'];
 						<ul class="sidebar-menu">
 							<li class="header">MENU NAVEGAÇÃO</li>
 							<li class="treeview">
-								<a href="index.php?$pagina=home">
+								<a href="index.php?pagina=home">
 									<i class="fa fa-dashboard"></i> <span>Dashboard </span>
 								</a>
 							</li>
+
+
 							<li class="treeview">
 								<a href="#">
-									<i class="fa fa-laptop"></i>
+									<i class="fa fa-plus"></i>
 									<span>Cadastro</span>
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-									<li><a href="grids.html"><i class="fa fa-angle-right"></i> Cargos</a></li>
-									<li><a href="media.html"><i class="fa fa-angle-right"></i> Media Css</a></li>
+									<li><a href="index.php?pagina=cargos"><i class="fa fa-angle-right"></i> Cargos</a></li>
+									<li><a href="index.php?pagina=tipos-imoveis"><i class="fa fa-angle-right"></i> Tipos Imóveis</a></li>
+
+									<li><a href="index.php?pagina=cidades"><i class="fa fa-angle-right"></i> Cidades</a></li>
+									<li><a href="index.php?pagina=bairros"><i class="fa fa-angle-right"></i> Bairros</a></li>
+									<li><a href="index.php?pagina=contas-banco"><i class="fa fa-angle-right"></i> Contas Bancárias</a></li>
+
+									<li><a href="index.php?pagina=frequencias"><i class="fa fa-angle-right"></i> Frequências</a></li>
+
+									<li><a href="index.php?pagina=acessos"><i class="fa fa-angle-right"></i> Acessos</a></li>
+								</ul>
+							</li>
+
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-dollar"></i>
+									<span>Financeiro</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=contas-a-pagar"><i class="fa fa-angle-right"></i> Contas à pagar</a></li>
+									<li><a href="index.php?pagina=contas-a-receber"><i class="fa fa-angle-right"></i> Contas à receber</a></li>
+
+
 								</ul>
 							</li>
 							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-home"></i>
+									<span>Imóveis</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=imoveis"><i class="fa fa-angle-right"></i> Imóveis Cadastrados</a></li>
+									<li><a href="index.php?pagina=imoveis-venda"><i class="fa fa-angle-right"></i> Imóveis Venda</a></li>
+
+									<li><a href="index.php?pagina=imoveis-locacao"><i class="fa fa-angle-right"></i> Imóveis Locação</a></li>
+
+									<li><a href="index.php?pagina=imoveis-vendidos"><i class="fa fa-angle-right"></i> Imóveis Vendidos</a></li>
+
+									<li><a href="index.php?pagina=imoveis-alugados"><i class="fa fa-angle-right"></i> Imóveis Alugados</a></li>
+
+									<li><a href="index.php?pagina=imoveis-inativos"><i class="fa fa-angle-right"></i> Imóveis Inativos</a></li>
+
+
+								</ul>
+							</li>
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-user"></i>
+									<span>Pessoas</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=funcionarios"><i class="fa fa-angle-right"></i> Funcionário</a></li>
+									<li><a href="index.php?pagina=vendedoresLocadores"><i class="fa fa-angle-right"></i> Vendedores / Locadores</a></li>
+									<li><a href="index.php?pagina=compradores"><i class="fa fa-angle-right"></i> Compradores</a></li>
+									<li><a href="index.php?pagina=locadores"><i class="fa fa-angle-right"></i> Locadores</a></li>
+									<li><a href="index.php?pagina=locatário"><i class="fa fa-angle-right"></i> Locatário</a></li>
+									<li><a href="index.php?pagina=usuarios"><i class="fa fa-angle-right"></i> Usuarios</a></li>
+
+									<li><a href="grids.html"><i class="fa fa-angle-right"></i> Grids</a></li>
+									<li><a href="media.html"><i class="fa fa-angle-right"></i> Media Css</a></li>
+								</ul>
+							</li>
+
+
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-laptop"></i>
+									<span>Configurações</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=config-site"><i class="fa fa-angle-right"></i> Site</a></li>
+								</ul>
+							</li>
+							<!-- <li class="treeview">
 								<a href="charts.html">
 									<i class="fa fa-pie-chart"></i>
 									<span>Charts</span>
 									<span class="label label-primary pull-right">new</span>
 								</a>
 							</li>
-							<li class="treeview">
+							
 							<li class="treeview">
 								<a href="#">
 									<i class="fa fa-laptop"></i>
@@ -218,8 +297,19 @@ $pagina = @$_GET['pagina'];
 								<ul class="treeview-menu">
 									<li><a href="tables.html"><i class="fa fa-angle-right"></i> Simple tables</a></li>
 								</ul>
-							</li>
+							</li> -->
 							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-envelope"></i> <span>Mensagens </span>
+									<i class="fa fa-angle-left pull-right"></i><small class="label pull-right label-info1">08</small><span class="label label-primary1 pull-right">02</span></a>
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=caixa-de-entrada"><i class="fa fa-angle-right"></i> Caixa de mensagens </a></li>
+									<li><a href="index.php?pagina=caixa-de-saida"><i class="fa fa-angle-right"></i> Enviar mensagens </a></li>
+								</ul>
+							</li>
+
+
+							<!-- <li class="treeview">
 								<a href="#">
 									<i class="fa fa-envelope"></i> <span>Mailbox </span>
 									<i class="fa fa-angle-left pull-right"></i><small class="label pull-right label-info1">08</small><span class="label label-primary1 pull-right">02</span></a>
@@ -227,8 +317,49 @@ $pagina = @$_GET['pagina'];
 									<li><a href="inbox.html"><i class="fa fa-angle-right"></i> Mail Inbox </a></li>
 									<li><a href="compose.html"><i class="fa fa-angle-right"></i> Compose Mail </a></li>
 								</ul>
+							</li> -->
+							<li class="treeview">
+								<a href="index.php?pagina=agenda">
+									<i class="fa fa-calendar-o"></i> <span>Agenda</span>
+								</a>
+							</li>
+							<li class="treeview ">
+								<a href="index.php?pagina=tarefas">
+									<i class="fa fa-clock-o"></i> <span>Tarefas Usuários</span>
+								</a>
 							</li>
 							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-file-o"></i> <span>Relatórios financeiros </span>
+									<i class="fa fa-angle-left pull-right"></i>
+									<ul class="treeview-menu">
+										<li><a href="#"><i class="fa fa-angle-right"></i> Relatório movimentações </a></li>
+										<li><a href="#"><i class="fa fa-angle-right"></i> Relatório comissões </a></li>
+										<li><a href="#"><i class="fa fa-angle-right"></i> Relatório aluguéis </a></li>
+										<li><a href="#"><i class="fa fa-angle-right"></i> Relatório
+												contas pagar </a></li>
+										<li><a href="#"><i class="fa fa-angle-right"></i> Relatório
+												contas receber </a></li>
+										<li><a href="#"><i class="fa fa-angle-right"></i> Recibo de pagamentos </a></li>
+
+									</ul>
+							</li>
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-file-o"></i> <span>Contratos e PDFs</span>
+									<i class="fa fa-angle-left pull-right"></i>
+									<ul class="treeview-menu">
+										<li><a href="#"><i class="fa fa-angle-right"></i> Proposta compra </a></li>
+										<li><a href="#"><i class="fa fa-angle-right"></i> Proposta locação </a></li>
+										<li><a href="#"><i class="fa fa-angle-right"></i> Laudo vistorias </a></li>
+										<li><a href="#"><i class="fa fa-angle-right"></i> Vendas </a></li>
+										<li><a href="#"><i class="fa fa-angle-right"></i> Aluguéis </a></li>
+										<li><a href="#"><i class="fa fa-angle-right"></i> Recibo de pagamentos </a></li>
+
+									</ul>
+							</li>
+
+							<!-- <li class="treeview">
 								<a href="#">
 									<i class="fa fa-folder"></i> <span>Examples</span>
 									<i class="fa fa-angle-left pull-right"></i>
@@ -240,7 +371,7 @@ $pagina = @$_GET['pagina'];
 									<li><a href="500.html"><i class="fa fa-angle-right"></i> 500 Error</a></li>
 									<li><a href="blank-page.html"><i class="fa fa-angle-right"></i> Blank Page</a></li>
 								</ul>
-							</li>
+							</li> -->
 							<li class="header">LABELS</li>
 							<li><a href="#"><i class="fa fa-angle-right text-red"></i> <span>Important</span></a></li>
 							<li><a href="#"><i class="fa fa-angle-right text-yellow"></i> <span>Warning</span></a></li>
@@ -304,7 +435,7 @@ $pagina = @$_GET['pagina'];
 									</a></li>
 								<li>
 									<div class="notification_bottom">
-										<a href="#">See all messages</a>
+										<a href="#">Ver todas as mensagens</a>
 									</div>
 								</li>
 							</ul>
@@ -351,7 +482,7 @@ $pagina = @$_GET['pagina'];
 									</a></li>
 								<li>
 									<div class="notification_bottom">
-										<a href="#">See all notifications</a>
+										<a href="#">Ver todas as notificações</a>
 									</div>
 								</li>
 							</ul>
@@ -402,7 +533,75 @@ $pagina = @$_GET['pagina'];
 									</a></li>
 								<li>
 									<div class="notification_bottom">
-										<a href="#">See all pending tasks</a>
+										<a href="#">Veja todas as tarefas pendentes</a>
+									</div>
+								</li>
+							</ul>
+						</li>
+
+						<li class="dropdown head-dpdn">
+							<a href="#" class="dropdown-toggle text-white" data-toggle="dropdown" aria-expanded="false"><span class="text-white glyphicon glyphicon-eye-open" aria-hidden="true"></span><span class="badge user1">8</span></a>
+							<ul class="dropdown-menu">
+								<li>
+									<div class="notification_header">
+										<a href="../../index.html" target="_blank">
+											<h3>VISITAR SITE</h3>
+										</a>
+									</div>
+								</li>
+								<li>
+									<div class="notification_header">
+										<a href="index.php?pagina=config-site">
+											<h3>MODIFICAR SITE</h3>
+										</a>
+									</div>
+								</li>
+								
+								<li>
+									<div class="notification_header">
+										<h3>You have 8 pending task</h3>
+									</div>
+								</li>
+								<li><a href="#">
+										<div class="task-info">
+
+											<span class="task-desc">Database update</span><span class="percentage">40%</span>
+											<div class="clearfix"></div>
+										</div>
+										<div class="progress progress-striped active">
+											<div class="bar yellow" style="width:40%;"></div>
+										</div>
+									</a></li>
+								<!-- <li><a href="#">
+										<div class="task-info">
+											<span class="task-desc">Dashboard done</span><span class="percentage">90%</span>
+											<div class="clearfix"></div>
+										</div>
+										<div class="progress progress-striped active">
+											<div class="bar green" style="width:90%;"></div>
+										</div>
+									</a></li>
+								<li><a href="#">
+										<div class="task-info">
+											<span class="task-desc">Mobile App</span><span class="percentage">33%</span>
+											<div class="clearfix"></div>
+										</div>
+										<div class="progress progress-striped active">
+											<div class="bar red" style="width: 33%;"></div>
+										</div>
+									</a></li>
+								<li><a href="#">
+										<div class="task-info">
+											<span class="task-desc">Issues fixed</span><span class="percentage">80%</span>
+											<div class="clearfix"></div>
+										</div>
+										<div class="progress progress-striped active">
+											<div class="bar  blue" style="width: 80%;"></div>
+										</div>
+									</a></li> -->
+								<li>
+									<div class="notification_bottom">
+										<a href="#">Veja todas as tarefas pendentes</a>
 									</div>
 								</li>
 							</ul>
@@ -419,7 +618,7 @@ $pagina = @$_GET['pagina'];
 				<!--search-box-->
 				<div class="search-box">
 					<form class="input">
-						<input class="sb-search-input input__field--madoka" placeholder="Search..." type="search" id="input-31" />
+						<input class="sb-search-input input__field--madoka" placeholder="Pesquisar..." type="search" id="input-31" />
 						<label class="input__label" for="input-31">
 							<svg class="graphic" width="100%" height="100%" viewBox="0 0 404 77" preserveAspectRatio="none">
 								<path d="m0,0l404,0l0,77l-404,0l0,-77z" />
@@ -437,7 +636,9 @@ $pagina = @$_GET['pagina'];
 									<span class="prfil-img"><img class="img-fluid" width="50px" height="50px" src="images/perfil/<?php echo $foto_user ?>" alt=""> </span>
 									<div class="user-name">
 										<p><?php echo $nome_user ?></p>
-										<span><?php echo $nivel_user ?></span>
+										<span><?php if ($nivel_user) {
+													echo "Administrador";
+												} ?></span>
 									</div>
 									<i class="fa fa-angle-down lnr"></i>
 									<i class="fa fa-angle-up lnr"></i>
@@ -463,13 +664,48 @@ $pagina = @$_GET['pagina'];
 
 		<?php
 
-		if ($pagina == "cargos") {
-			require_once 'cargos.php';
-		} else {
+		if ($pagina == "home" || $pagina == "") {
 			require_once 'home.php';
+		} elseif ($pagina == "cargos") {
+			require_once 'cargos.php';
+		} elseif ($pagina == "funcionarios") {
+			require_once 'funcionarios.php';
+		} elseif ($pagina == "usuarios") {
+			require_once 'usuarios.php';
+		} elseif ($pagina == "caixa-de-entrada") {
+			require_once 'caixa-de-entrada.php';
+		} elseif ($pagina == "caixa-de-saida") {
+			require_once 'caixa-de-saida.php';
+		} elseif ($pagina == "tipos-imoveis") {
+			require_once 'tipos-imoveis.php';
+		} elseif ($pagina == "contas-a-pagar") {
+			require_once 'contas-a-pagar.php';
+		} elseif ($pagina == "contas-a-receber") {
+			require_once 'contas-a-receber.php';
+		} elseif ($pagina == "config-site") {
+			require_once 'config-site.php';
+		} elseif ($pagina == "agenda") {
+			require_once 'agenda.php';
+		} elseif ($pagina == "cidades") {
+			require_once 'cidades.php';
+		} elseif ($pagina == "bairros") {
+			require_once 'bairros.php';
+		} elseif ($pagina == "contas-banco") {
+			require_once 'contas-banco.php';
+		} elseif ($pagina == "frequencias") {
+			require_once 'frequencias.php';
+		} elseif ($pagina == "imoveis") {
+			require_once 'imoveis.php';
+		} elseif ($pagina == "vendedoresLocadores") {
+			require_once 'vendedoresLocadores.php';
+		} elseif ($pagina == "acessos") {
+			require_once 'acessos.php';
+		}else {
+			require_once '404.html';
 		}
-
+		
 		?>
+
 
 		<!-- modal perfil -->
 		<!-- Button trigger modal -->
@@ -487,7 +723,7 @@ $pagina = @$_GET['pagina'];
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="" method="POST" id="form-user">
+					<form method="POST" id="form-usuario">
 						<div class="modal-body">
 							<div class="row">
 								<div class="col-md-6">
@@ -499,7 +735,7 @@ $pagina = @$_GET['pagina'];
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="">CPF</label>
-										<input type="text" class="form-control" name="cpf_user" value="<?php echo $cpf_user; ?>">
+										<input type="text" class="form-control" name="cpf_user" id="cpf_user" value="<?php echo $cpf_user; ?>">
 									</div>
 								</div>
 							</div>
@@ -523,90 +759,99 @@ $pagina = @$_GET['pagina'];
 								<div class="col-md-8">
 									<div class="form-group">
 										<label for="">Foto</label>
-										<input type="file" class="form-control" name="foto" onChange="carregarImg2();"  id="foto-user" >
+										<input type="file" class="form-control" name="foto" onChange="carregarImg2();" id="foto-user">
 									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
-										<img src="images/perfil/<?php echo $foto_user ?>" width="100px" id="target-user"> 
+										<img src="images/perfil/<?php echo $foto_user ?>" width="100px" id="target-user">
 									</div>
 								</div>
 							</div>
 
-							<input type="hidden" name="id_user" value="<?php echo $id_usuario?>">
-							<input type="hidden" name="foto_user" value="<?php echo $foto_user?>">
+							<input type="hidden" name="id_user" value="<?php echo $id_usuario ?>">
+							<input type="hidden" name="foto_user" value="<?php echo $foto_user ?>">
+							<input type="hidden" name="nivel_user" value="<?php echo $nivel_user ?>">
+
+							<small>
+								<div class="mt-3 text-center" id="msg-user"></div>
+							</small>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Alterar e Salvar</button>
 						</div>
 					</form>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Save changes</button>
-					</div>
 				</div>
 			</div>
 		</div>
 
 		<!--footer-->
 		<div class="footer">
-			<p>&copy; 2018 Glance Design Dashboard. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts</a></p>
+			<!-- © 2018 Glance Design Dashboard. Todos os direitos reservados Design por w3layouts -->
+			<p>&copy; 2022 Caipora Dashboard. Todos os direitos reservados | <a href="https://caipora.com.br/" target="_blank">CAIPORA SOLUÇÕES WEB</a></p>
 		</div>
 		<!--//footer-->
 	</div>
 
 	<!-- new added graphs chart js-->
 
-		<!-- carregar imagem no modal -->
+	<!-- carregar imagem no <!-- calendar -->
+	<script type="text/javascript" src="js/monthly.js"></script>
+	<script type="text/javascript">
+		$(window).load(function() {
 
-		<script>
-			function carregarImg2(){
-				var target = document.getElementById('target-user');
-				var file = document.querySelector('#foto-user').files[0];
+			$('#mycalendar').monthly({
+				mode: 'event',
 
-				var reader = new FileReader();
+			});
 
-				reader.onloadend = function(){
-					target.src = reader.result;
-				};
+			$('#mycalendar2').monthly({
+				mode: 'picker',
+				target: '#mytarget',
+				setWidth: '250px',
+				startHidden: true,
+				showTrigger: '#mytarget',
+				stylePast: true,
+				disablePast: true
+			});
 
-				if(file){
-					reader.readAsDataURL(file);
-				}else {
-					target.src = "";
-				}
+			switch (window.location.protocol) {
+				case 'http:':
+				case 'https:':
+					// running on a server, should be good.
+					break;
+				case 'file:':
+					alert('Just a heads-up, events will not work when run locally.');
 			}
-		</script>
 
-		<script>
+		});
+	</script>
+	<!-- //calendar -->modal -->
 
-			$('#form-user').submit(function(){
-				event.preventDefault();
-				var formData = new FormData(this);
+	<script>
+		function carregarImg2() {
+			var target = document.getElementById('target-user');
+			var file = document.querySelector('#foto-user').files[0];
 
-				$.ajax({
-					url: "editor-dados.php",
-					type: 'POST',
-					data: formData,
+			var reader = new FileReader();
 
-					success:function (mensagem){
-						$('#msg-user').text('');	
-						$('#msg-user').removeClass();
-						if(mensagem.trim() == "Salvo com Sucesso"){
-							location.reload();
-						}else{
-							$('#msg-user').addClass('text-danger');
-							$('#msg-user').text(mensagem);
+			reader.onloadend = function() {
+				target.src = reader.result;
+			};
 
-						}
-						
-					},
-					cache:false,
-					contentType:false,
-					processData:false,
-				});
-			})
+			if (file) {
+				reader.readAsDataURL(file);
+			} else {
+				target.src = "";
+			}
+		}
+	</script>
 
-		</script>
-		<!-- parei aqui -->
-		<!-- https://www.youtube.com/watch?v=8U7fxwHt9JY&list=PLxNM4ef1BpxhMhQuRs5KtLaxwz9Wj3Hmf&index=28 -->
+
+
+	<!-- https://www.youtube.com/watch?v=8U7fxwHt9JY&list=PLxNM4ef1BpxhMhQuRs5KtLaxwz9Wj3Hmf&index=28 -->
 
 
 	<script src="js/Chart.bundle.js"></script>
@@ -754,6 +999,20 @@ $pagina = @$_GET['pagina'];
 	</script>
 	<!-- //Classie -->
 	<!-- //for toggle left push menu script -->
+
+
+	<script src="js/nicEdit.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		bkLib.onDomLoaded(function() {
+			//new nicEditor().panelInstance('area1');
+			new nicEditor({
+				fullPanel: true
+			}).panelInstance('area2');
+			//new nicEditor({iconsPath : '../nicEditorIcons.gif'}).panelInstance('area3');
+			//new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('area4');
+			//new nicEditor({maxHeight : 100}).panelInstance('area5');
+		});
+	</script>
 
 	<!--scrolling js-->
 	<script src="js/jquery.nicescroll.js"></script>
@@ -1319,6 +1578,57 @@ $pagina = @$_GET['pagina'];
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.js"> </script>
 	<!-- //Bootstrap Core JavaScript -->
+
+
+
+	<script src="./js/mascara.js"></script>
+
+	<script>
+		// $( '#form-usuario' ).submit(function( event ) {
+		//   alert( "Handler for .submit() called." );
+		//   event.preventDefault();
+		// });
+
+		$('#form-usuario').submit(function() {
+			console.log('teste');
+			event.preventDefault();
+			var formData = new FormData(this);
+
+			$.ajax({
+				url: "editar-dados.php",
+				type: 'POST',
+				data: formData,
+
+				success: function(mensagem) {
+					$('#msg-user').text('');
+					$('#msg-user').removeClass();
+					if (mensagem.trim() == "Salvo com Sucesso") {
+						location.reload();
+					} else {
+						$('#msg-user').addClass('text-danger');
+						$('#msg-user').text(mensagem);
+
+					}
+
+				},
+				cache: false,
+				contentType: false,
+				processData: false,
+			});
+		});
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.5.0.js"></script> -->
+
+
+
+
+	<!-- <script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script>
+	<script type="text/javascript">
+		bkLib.onDomLoaded(function() {
+			nicEditors.allTextAreas()
+		});
+	</script> -->
 
 </body>
 

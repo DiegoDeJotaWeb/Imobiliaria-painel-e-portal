@@ -3,17 +3,17 @@
 $senha_crip = md5('admin');
 //echo $senha_crip;
 
-$query = $pdo->query("select * from usuarios where nivelUsuario = 'Administrador'");
+$query = $pdo->query("select * from funcionarios where administradorFuncionario = 'Sim'");
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 $total_result = @count($result);
 
 // exit();
 
 if ($total_result == 0) {
-    $pdo->query("insert into usuarios(
-    nomeUsuario,   cpfUsuario,    emailUsuario,    senhaUsuario, senhaUsuarioCrip,  nivelUsuario, fotoUsuario)
+    $pdo->query("insert into funcionarios(
+    nomeFuncionario,   cpfFuncionario,    emailFuncionario,    senhaFuncionario, senhaCripFuncionario,  administradorFuncionario, fotoFuncionario)
     values
-    ('admin', '000.000.000-00', 'diego@caipora.com.br', 'admin', '$senha_crip', 'Administrador', 'avatar1.png');");
+    ('admin', '000.000.000-00', 'diego@caipora.com.br', 'admin', '$senha_crip', 'Sim', 'avatar1.png');");
 }
 
 ?>
@@ -114,6 +114,7 @@ if ($total_result == 0) {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
 </body>
 
 </html>

@@ -12,7 +12,7 @@ $usuario = $_POST['usuario'];
 $senha = $_POST['senha'];
 $senha_crip = md5($senha);
 
-$query = $pdo->prepare("select * from usuarios where (cpfUsuario = :usuario or emailUsuario = :usuario) and senhaUsuarioCrip = :senha");
+$query = $pdo->prepare("select * from funcionarios where (cpfFuncionario = :usuario or emailFuncionario = :usuario) and senhaCripFuncionario = :senha");
 
 $query->bindValue(":usuario","$usuario");
 $query->bindValue(":senha", "$senha_crip");
@@ -22,10 +22,10 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
 $total_result = @count($result);
 
 if ($total_result > 0) {
-    $_SESSION['id_usuario'] = $result[0]['idUsuario'];
-    $_SESSION['nome_usuario'] = $result[0]['nomeUsuario'];
-    $_SESSION['nivel_usuario'] = $result[0]['nivelUsuario'];
-    $_SESSION['foto_usuario'] = $result[0]['fotoUsuario'];
+    $_SESSION['id_usuario'] = $result[0]['idFuncionario'];
+    $_SESSION['nome_usuario'] = $result[0]['nomeFuncionario'];
+    $_SESSION['nivel_usuario'] = $result[0]['administradorFuncionario'];
+    $_SESSION['foto_usuario'] = $result[0]['fotoFuncionario'];
     echo "<script>window.location='painel';</script>";
 }else{
    

@@ -64,6 +64,15 @@ Monthly 2.0.5 by Kevin Thornbloom is licensed under a Creative Commons Attributi
 			console.log('Incorrect entry for weekStart variable.')
 		}
 
+		// Add Day Of Week Titles
+		// if (options.weekStart == 'Sun') {
+		// 	$('#' + uniqueId).append('<div class="monthly-day-title-wrap"><div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div></div><div class="monthly-day-wrap"></div>');
+		// } else if (options.weekStart == 'Mon') {
+		// 	$('#' + uniqueId).append('<div class="monthly-day-title-wrap"><div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div></div><div class="monthly-day-wrap"></div>');
+		// } else {
+		// 	console.log('Incorrect entry for weekStart variable.')
+		// }
+
 		// Add Header & event list markup
 		$('#' + uniqueId).prepend('<div class="monthly-header"><div class="monthly-header-title"></div><a href="#" class="monthly-prev"></a><a href="#" class="monthly-next"></a></div>').append('<div class="monthly-event-list"></div>');
 
